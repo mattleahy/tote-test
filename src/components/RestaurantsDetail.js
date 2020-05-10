@@ -1,10 +1,14 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
+import image from "../../assets/No_image_available.png";
 
 const RestaurantsDetail = ({ restaurant }) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={{ uri: restaurant.image_url }} />
+      <Image
+        style={styles.image}
+        source={restaurant.image_url ? { uri: restaurant.image_url } : image}
+      />
       <Text style={styles.name}>{restaurant.name}</Text>
       <Text>
         {restaurant.rating} Stars, {restaurant.review_count} Reviews
