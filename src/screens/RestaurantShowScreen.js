@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  ScrollView,
+} from "react-native";
 import yelp from "../api/yelp";
 
 const RestaurantShowScreen = ({ navigation }) => {
@@ -18,17 +25,28 @@ const RestaurantShowScreen = ({ navigation }) => {
   if (!restaurant) {
     return null;
   }
+
   return (
-    <View>
-      <Text>{restaurant.name}</Text>
+    <ScrollView>
+      <Text style={styles.name}>{restaurant.name}</Text>
+      <View style={styles.address}>
+        <Text style={styles.address}>{restaurant.location.address1}</Text>
+        <Text style={styles.address}>{restaurant.location.city}</Text>
+        <Text style={styles.address}>{restaurant.location.zip_code}</Text>
+      </View>
+      <View>
+        <Text style={styles.title}>Photos</Text>
+      </View>
+
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={restaurant.photos}
         keyExtractor={(photo) => photo}
         renderItem={({ item }) => {
           return <Image style={styles.image} source={{ uri: item }} />;
         }}
       />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -36,6 +54,22 @@ const styles = StyleSheet.create({
   image: {
     height: 200,
     width: 300,
+    margin: 10,
+  },
+  address: {
+    marginLeft: 5,
+    marginTop: 5,
+    fontSize: 20,
+  },
+  name: {
+    fontWeight: "bold",
+    fontSize: 25,
+    margin: 10,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 20,
+    margin: 10,
   },
 });
 
